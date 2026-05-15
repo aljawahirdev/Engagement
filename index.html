@@ -459,11 +459,7 @@ src="https://scontent.fogx1-1.fna.fbcdn.net/v/t39.30808-6/327352070_298958066135
 
 <div class="input-group">
 
-<label>الاسم </label>
 
-<input type="text" name="firstname" required>
-
-</div>
 <label>اللقب </label>
 
 <input type="text" name="fullname" required>
@@ -471,7 +467,7 @@ src="https://scontent.fogx1-1.fna.fbcdn.net/v/t39.30808-6/327352070_298958066135
 </div>
 <div class="input-group">
 
-<label>اسم الأب</label>
+<label> الاسم </label>
 
 <input type="text" name="fathername" required>
 
@@ -702,7 +698,6 @@ const form = e.target;
 const data = new FormData(form);
 
 const fullname = data.get("fullname");
-const firstname = data.get("firstname"); 
 const fathername = data.get("fathername");
 const phone = data.get("phone");
 const email = data.get("email");
