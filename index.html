@@ -210,20 +210,37 @@ input,
 select,
 textarea{
   width:100%;
-  padding:16px;
-  border-radius:18px;
-  border:1px solid rgba(41,158,157,.18);
-  background:#fafafa;
+  padding:18px;
+  border-radius:22px;
+  border:2px solid rgba(41,158,157,.16);
+  background:#ffffff;
   font-family:inherit;
   outline:none;
   transition:.25s;
+  font-size:15px;
+  color:#222;
+  box-shadow:0 8px 20px rgba(41,158,157,.06);
+}
+
+input:hover,
+select:hover,
+textarea:hover{
+  border-color:rgba(41,158,157,.35);
 }
 
 input:focus,
 select:focus,
 textarea:focus{
   border-color:var(--primary);
-  box-shadow:0 0 0 4px rgba(126,214,209,.22);
+  background:#fcffff;
+  box-shadow:
+  0 0 0 5px rgba(126,214,209,.20),
+  0 10px 25px rgba(41,158,157,.10);
+}
+
+input::placeholder,
+textarea::placeholder{
+  color:#999;
 }
 
 textarea{
@@ -525,13 +542,43 @@ src="https://drive.google.com/thumbnail?id=1mN39uinRmOQGj04B5OfC9ZTPtlXyF1mb&sz=
 <div class="form-grid">
 
 <div class="input-group">
+
 <label>اللقب</label>
+
 <input type="text" name="fullname" required>
+
 </div>
 
 <div class="input-group">
+
 <label>الاسم</label>
-<input type="text" name="firstname" required>
+
+<input type="text" name="fathername" required>
+
+</div>
+
+<div class="input-group">
+
+<label>تاريخ الميلاد</label>
+
+<input type="date" name="birthdate" required>
+
+</div>
+
+<div class="input-group">
+
+<label>الجنس</label>
+
+<select name="gender" required>
+
+<option value="">اختر</option>
+
+<option>ذكر</option>
+
+<option>أنثى</option>
+
+</select>
+
 </div>
 
 <div class="input-group">
@@ -572,6 +619,11 @@ src="https://drive.google.com/thumbnail?id=1mN39uinRmOQGj04B5OfC9ZTPtlXyF1mb&sz=
 </div>
 
 <div class="input-group">
+<label>تاريخ الإصدار</label>
+<input type="date" name="issuedate" required>
+</div>
+
+<div class="input-group">
 <label>نوع الانخراط</label>
 
 <select name="membership" required>
@@ -588,12 +640,9 @@ src="https://drive.google.com/thumbnail?id=1mN39uinRmOQGj04B5OfC9ZTPtlXyF1mb&sz=
 
 </div>
 
-<div class="input-group full">
-
+<div class="input-group">
 <label>العنوان</label>
-
-<textarea name="address"></textarea>
-
+<input type="text" name="address" required>
 </div>
 
 <div class="input-group full">
