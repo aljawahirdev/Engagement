@@ -2,7 +2,10 @@
 <html lang="ar" dir="rtl">
 
 <head>
-    <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1mN39uinRmOQGj04B5OfC9ZTPtlXyF1mb&sz=256">
+
+<link rel="icon" type="image/png"
+href="https://drive.google.com/thumbnail?id=1mN39uinRmOQGj04B5OfC9ZTPtlXyF1mb&sz=256">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -313,6 +316,77 @@ textarea{
   font-weight:700;
 }
 
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.modal-content{
+  background:white;
+  width:min(700px,100%);
+  border-radius:30px;
+  padding:30px;
+  max-height:90vh;
+  overflow:auto;
+  position:relative;
+}
+
+.close-modal{
+  position:absolute;
+  left:20px;
+  top:20px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:#eee;
+  cursor:pointer;
+  font-size:20px;
+}
+
+.conditions-list{
+  margin-top:20px;
+  display:grid;
+  gap:14px;
+  line-height:2;
+  color:#555;
+}
+
+.conditions-list div{
+  background:#fafafa;
+  padding:14px 18px;
+  border-radius:18px;
+}
+
+.conditions-btn{
+  width:100%;
+  margin-top:20px;
+  border:none;
+  background:rgba(41,158,157,.12);
+  color:var(--primary-dark);
+  padding:16px;
+  border-radius:18px;
+  font-family:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.agree-box{
+  margin-top:18px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  background:rgba(126,214,209,.12);
+  padding:16px;
+  border-radius:18px;
+}
+
 footer{
   background:#162121;
   color:white;
@@ -325,17 +399,6 @@ footer{
   gap:25px;
 }
 
-footer h4{
-  margin-bottom:14px;
-}
-
-footer p,
-footer a{
-  color:rgba(255,255,255,.75);
-  line-height:2;
-  text-decoration:none;
-}
-
 .copy{
   margin-top:25px;
   border-top:1px solid rgba(255,255,255,.08);
@@ -346,21 +409,21 @@ footer a{
 
 @media(max-width:980px){
 
-  .hero-grid{
-    grid-template-columns:1fr;
-  }
+.hero-grid{
+grid-template-columns:1fr;
+}
 
-  .form-grid{
-    grid-template-columns:1fr;
-  }
+.form-grid{
+grid-template-columns:1fr;
+}
 
-  .price-cards{
-    grid-template-columns:1fr;
-  }
+.price-cards{
+grid-template-columns:1fr;
+}
 
-  .footer-grid{
-    grid-template-columns:1fr;
-  }
+.footer-grid{
+grid-template-columns:1fr;
+}
 
 }
 
@@ -376,19 +439,17 @@ footer a{
 
 <div class="logo-area">
 
-<a href="https://aljawahirdev.github.io/home/" class="brand" aria-label="جمعية الجواهر بقمار">
-  
-  <img class="logo"
-       src="https://drive.google.com/thumbnail?id=1mN39uinRmOQGj04B5OfC9ZTPtlXyF1mb&sz=w1000"
-       alt="شعار جمعية الجواهر بقمار" />
+<a href="https://aljawahirdev.github.io/home/">
+
+<img class="logo"
+src="https://drive.google.com/thumbnail?id=1mN39uinRmOQGj04B5OfC9ZTPtlXyF1mb&sz=w1000">
+
 </a>
-  <h1>
-    جمعية الجواهر بقمار
-    <span>Association Al-Djawahir Guemar</span>
-  </h1>
 
-
-
+<h1>
+جمعية الجواهر بقمار
+<span>Association Al-Djawahir Guemar</span>
+</h1>
 
 </div>
 
@@ -416,8 +477,7 @@ footer a{
 </h2>
 
 <p>
-يمكنك الآن طلب بطاقة الانخراط الإلكترونية الخاصة بجمعية الجواهر بقمار
-بكل سهولة عبر تعبئة الاستمارة التالية وإرسال معلوماتك للإدارة.
+يمكنك الآن طلب بطاقة الانخراط الإلكترونية الخاصة بجمعية الجواهر بقمار.
 </p>
 
 </div>
@@ -428,10 +488,10 @@ footer a{
 
 <div class="floating-box">
 
-<h3> إنخرط معنا في صناعة الأثر  </h3>
+<h3>إنخرط معنا في صناعة الأثر</h3>
 
 <p>
-أنشطة خيرية متنوعة حسب احتياجات المجتمع: حملات، زيارات، دعم، توعية، ومرافقة.
+أنشطة خيرية متنوعة حسب احتياجات المجتمع.
 </p>
 
 </div>
@@ -465,57 +525,53 @@ footer a{
 <div class="form-grid">
 
 <div class="input-group">
-
-
-<label>اللقب </label>
-
+<label>اللقب</label>
 <input type="text" name="fullname" required>
-
-</div>
-<div class="input-group">
-
-<label> الاسم </label>
-
-<input type="text" name="fathername" required>
-
 </div>
 
 <div class="input-group">
+<label>الاسم</label>
+<input type="text" name="firstname" required>
+</div>
 
+<div class="input-group">
 <label>رقم الهاتف</label>
-
 <input type="tel" name="phone" required>
-
 </div>
 
 <div class="input-group">
-
 <label>البريد الإلكتروني</label>
-
 <input type="email" name="email">
-
 </div>
 
 <div class="input-group">
+<label>نوع الوثيقة</label>
 
-<label>المستوى الدراسي</label>
-
-<select name="study" required>
+<select name="doctype" required>
 
 <option value="">اختر</option>
 
-<option>ابتدائي</option>
-<option>متوسط</option>
-<option>ثانوي</option>
-<option>جامعي</option>
-<option>تكوين مهني</option>
+<option>بطاقة التعريف الوطنية</option>
+
+<option>رخصة السياقة</option>
+
+<option>جواز السفر</option>
 
 </select>
 
 </div>
 
 <div class="input-group">
+<label>رقم الوثيقة</label>
+<input type="text" name="docnumber" required>
+</div>
 
+<div class="input-group">
+<label>جهة الإصدار</label>
+<input type="text" name="docplace" required>
+</div>
+
+<div class="input-group">
 <label>نوع الانخراط</label>
 
 <select name="membership" required>
@@ -557,6 +613,33 @@ required>
 
 </div>
 
+<div class="input-group">
+
+<label>
+صورة الوثيقة (الوجه الأمامي)
+</label>
+
+<input type="file"
+accept="image/*"
+name="docfront"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>
+صورة الوثيقة (الوجه الخلفي)
+</label>
+
+<input type="file"
+accept="image/*"
+name="docback"
+id="docback"
+required>
+
+</div>
+
 </div>
 
 <div class="price-cards">
@@ -587,6 +670,30 @@ onclick="selectPrice(this,'شركة')">
 <div class="price">2000 دج</div>
 
 </div>
+
+</div>
+
+<button type="button"
+class="conditions-btn"
+onclick="openModal()">
+
+قراءة شروط الانخراط
+
+</button>
+
+<div class="agree-box">
+
+<input type="checkbox"
+id="agree"
+required
+style="width:22px;height:22px;accent-color:#299E9D;">
+
+<label for="agree"
+style="line-height:2;cursor:pointer;">
+
+أقر أنني قرأت شروط الانخراط وأوافق عليها بالكامل.
+
+</label>
 
 </div>
 
@@ -658,19 +765,69 @@ onclick="selectPrice(this,'شركة')">
 
 </footer>
 
+<div class="modal" id="conditionsModal">
+
+<div class="modal-content">
+
+<button class="close-modal"
+onclick="closeModal()">
+
+×
+</button>
+
+<h2 style="color:#1F7E7D;">
+شروط الانخراط
+</h2>
+
+<div class="conditions-list">
+
+<div>
+الالتزام بقوانين وأنظمة جمعية الجواهر بقمار.
+</div>
+
+<div>
+عدم استغلال اسم الجمعية لأي غرض شخصي أو سياسي.
+</div>
+
+<div>
+تقديم معلومات صحيحة وكاملة.
+</div>
+
+<div>
+احترام أخلاقيات العمل التطوعي والإنساني.
+</div>
+
+<div>
+تحتفظ الجمعية بحق قبول أو رفض الطلب.
+</div>
+
+<div>
+يوافق المنخرط على استخدام بياناته ضمن السجلات الإدارية فقط.
+</div>
+
+<div>
+حقوق الانخراط غير قابلة للاسترجاع بعد قبول الطلب.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 <script>
 
 const cards = document.querySelectorAll(".price-card");
 
 function selectPrice(element,type){
 
-  cards.forEach(card=>{
-    card.classList.remove("active");
-  });
+cards.forEach(card=>{
+card.classList.remove("active");
+});
 
-  element.classList.add("active");
+element.classList.add("active");
 
-  document.querySelector('[name="membership"]').value = type;
+document.querySelector('[name="membership"]').value = type;
 
 }
 
@@ -679,15 +836,46 @@ const preview = document.getElementById("preview");
 
 photoInput.addEventListener("change",function(){
 
-  const file = this.files[0];
+const file = this.files[0];
 
-  if(file){
+if(file){
 
-    preview.src = URL.createObjectURL(file);
+preview.src = URL.createObjectURL(file);
 
-    preview.style.display = "block";
+preview.style.display = "block";
 
-  }
+}
+
+});
+
+function openModal(){
+
+document.getElementById("conditionsModal").style.display="flex";
+
+}
+
+function closeModal(){
+
+document.getElementById("conditionsModal").style.display="none";
+
+}
+
+const doctype = document.querySelector('[name="doctype"]');
+const docback = document.getElementById("docback");
+
+doctype.addEventListener("change",function(){
+
+if(this.value === "جواز السفر"){
+
+docback.removeAttribute("required");
+docback.parentElement.style.display="none";
+
+}else{
+
+docback.setAttribute("required","required");
+docback.parentElement.style.display="grid";
+
+}
 
 });
 
@@ -696,77 +884,12 @@ document.getElementById("membershipForm")
 
 e.preventDefault();
 
-  const TELEGRAM_BOT_TOKEN = "8717065120:AAGF0l_CISz448WqquhypE0BQDeE-PePgMo";
-
-  const TELEGRAM_CHAT_ID = "-1003902410571";
-
-const form = e.target;
-
-const data = new FormData(form);
-
-const fullname = data.get("fullname");
-const fathername = data.get("fathername");
-const phone = data.get("phone");
-const email = data.get("email");
-const study = data.get("study");
-const membership = data.get("membership");
-const address = data.get("address");
-
-const message = `
-📥 طلب انخراط جديد
-
-👤 الاسم: ${fullname}
-
-👨 اسم الأب: ${fathername}
-
-📞 الهاتف: ${phone}
-
-📧 البريد: ${email}
-
-🎓 المستوى الدراسي: ${study}
-
-🪪 نوع الانخراط: ${membership}
-
-📍 العنوان:
-${address}
-`;
-
-try{
-
-await fetch(
-`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-chat_id:TELEGRAM_CHAT_ID,
-text:message
-})
-}
-);
-
 document.getElementById("successBox").style.display="block";
-
-form.reset();
-
-preview.style.display="none";
-
-cards.forEach(card=>{
-card.classList.remove("active");
-});
 
 window.scrollTo({
 top:document.body.scrollHeight,
 behavior:"smooth"
 });
-
-}catch(error){
-
-alert("حدث خطأ أثناء الإرسال");
-
-}
 
 });
 
