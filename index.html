@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -328,6 +329,16 @@ textarea{
   margin-top:25px;
   background:rgba(16,185,129,.12);
   color:#059669;
+  padding:18px;
+  border-radius:18px;
+  font-weight:700;
+}
+
+.error-box{
+  display:none;
+  margin-top:25px;
+  background:rgba(220,38,38,.12);
+  color:#b91c1c;
   padding:18px;
   border-radius:18px;
   font-weight:700;
@@ -754,7 +765,13 @@ style="line-height:2;cursor:pointer;">
 
 <div class="success-box" id="successBox">
 
-تم إرسال طلبك بنجاح إلى إدارة الجمعية.
+✅ تم إرسال طلبك بنجاح! سيتم مراجعته من قبل الإدارة قريباً.
+
+</div>
+
+<div class="error-box" id="errorBox">
+
+⚠️ حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.
 
 </div>
 
@@ -865,83 +882,172 @@ onclick="closeModal()">
 </div>
 
 <script>
+// ===================== الإعدادات =====================
+// ⚠️ هام: ضع رابط تطبيق Google Apps Script الخاص بك هنا
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbys0fwsOQoSYi49aUY8wSTnxcW9uJefZJxNyKC1YwXIVBaloV-dxTGSMiJ7SZYfUPTdSA/exec'; // ← غيّر هذا الرابط
 
+// ===================== دوال مساعدة =====================
 const cards = document.querySelectorAll(".price-card");
 
-function selectPrice(element,type){
-
-cards.forEach(card=>{
-card.classList.remove("active");
-});
-
-element.classList.add("active");
-
-document.querySelector('[name="membership"]').value = type;
-
+function selectPrice(element, type) {
+  cards.forEach(card => card.classList.remove("active"));
+  element.classList.add("active");
+  document.querySelector('[name="membership"]').value = type;
 }
 
 const photoInput = document.getElementById("photo");
 const preview = document.getElementById("preview");
 
-photoInput.addEventListener("change",function(){
-
-const file = this.files[0];
-
-if(file){
-
-preview.src = URL.createObjectURL(file);
-
-preview.style.display = "block";
-
-}
-
+photoInput.addEventListener("change", function() {
+  const file = this.files[0];
+  if (file) {
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+  }
 });
 
-function openModal(){
-
-document.getElementById("conditionsModal").style.display="flex";
-
+function openModal() {
+  document.getElementById("conditionsModal").style.display = "flex";
 }
 
-function closeModal(){
-
-document.getElementById("conditionsModal").style.display="none";
-
+function closeModal() {
+  document.getElementById("conditionsModal").style.display = "none";
 }
 
 const doctype = document.querySelector('[name="doctype"]');
 const docback = document.getElementById("docback");
 
-doctype.addEventListener("change",function(){
+doctype.addEventListener("change", function() {
+  if (this.value === "جواز سفر") {
+    docback.removeAttribute("required");
+    docback.parentElement.style.display = "none";
+  } else {
+    docback.setAttribute("required", "required");
+    docback.parentElement.style.display = "grid";
+  }
+});
 
-if(this.value === "جواز السفر"){
-
-docback.removeAttribute("required");
-docback.parentElement.style.display="none";
-
-}else{
-
-docback.setAttribute("required","required");
-docback.parentElement.style.display="grid";
-
+// ===================== تحويل الملف إلى Base64 =====================
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
+// ===================== إرسال الطلب إلى الخادم =====================
+document.getElementById("membershipForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  
+  const form = this;
+  const submitBtn = form.querySelector(".submit-btn");
+  const successBox = document.getElementById("successBox");
+  const errorBox = document.getElementById("errorBox");
+  
+  // إخفاء أي رسائل سابقة
+  successBox.style.display = "none";
+  errorBox.style.display = "none";
+  
+  // جمع الملفات
+  const photoFile = document.getElementById("photo").files[0];
+  const docFrontFile = document.querySelector('[name="docfront"]').files[0];
+  const docBackFile = document.querySelector('[name="docback"]').files[0];
+  
+  // التحقق من صحة الملفات
+  if (!photoFile) {
+    errorBox.style.display = "block";
+    errorBox.textContent = "⚠️ يرجى رفع الصورة الشخصية";
+    return;
+  }
+  
+  if (!docFrontFile) {
+    errorBox.style.display = "block";
+    errorBox.textContent = "⚠️ يرجى رفع صورة الوثيقة الأمامية";
+    return;
+  }
+  
+  const docType = document.querySelector('[name="doctype"]').value;
+  if (docType !== "جواز سفر" && !docBackFile) {
+    errorBox.style.display = "block";
+    errorBox.textContent = "⚠️ يرجى رفع صورة الوثيقة الخلفية";
+    return;
+  }
+  
+  // التحقق من الموافقة على الشروط
+  const agreeCheck = document.getElementById("agree");
+  if (!agreeCheck.checked) {
+    errorBox.style.display = "block";
+    errorBox.textContent = "⚠️ يرجى الموافقة على شروط الانخراط";
+    return;
+  }
+  
+  // تعطيل الزر أثناء الإرسال
+  submitBtn.disabled = true;
+  submitBtn.textContent = "جاري الإرسال...";
+  
+  try {
+    // تحويل الملفات إلى Base64
+    const photoBase64 = await fileToBase64(photoFile);
+    const docFrontBase64 = await fileToBase64(docFrontFile);
+    const docBackBase64 = docBackFile ? await fileToBase64(docBackFile) : '';
+    
+    // تجميع البيانات
+    const requestData = {
+      lastName: document.querySelector('[name="fullname"]').value,
+      firstName: document.querySelector('[name="fathername"]').value,
+      birthDate: document.querySelector('[name="birthdate"]').value,
+      gender: document.querySelector('[name="gender"]').value,
+      phone: document.querySelector('[name="phone"]').value,
+      email: document.querySelector('[name="email"]').value || '',
+      docType: docType,
+      docNumber: document.querySelector('[name="docnumber"]').value,
+      docPlace: document.querySelector('[name="docplace"]').value,
+      issueDate: document.querySelector('[name="issuedate"]').value,
+      membershipType: document.querySelector('[name="membership"]').value,
+      address: document.querySelector('[name="address"]').value,
+      photo: photoBase64,
+      docFront: docFrontBase64,
+      docBack: docBackBase64
+    };
+    
+    // إرسال الطلب إلى الخادم
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'submitMembershipRequest',
+        args: [requestData]
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (result.ok) {
+      // نجاح الإرسال
+      successBox.style.display = "block";
+      form.reset();
+      preview.style.display = "none";
+      preview.src = "";
+      // إلغاء تحديد البطاقة النشطة
+      cards.forEach(card => card.classList.remove("active"));
+      // التمرير إلى أعلى الصفحة
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      throw new Error(result.error || "حدث خطأ غير معروف");
+    }
+    
+  } catch (err) {
+    console.error("Error:", err);
+    errorBox.style.display = "block";
+    errorBox.textContent = "❌ " + (err.message || "فشل إرسال الطلب. يرجى المحاولة مرة أخرى.");
+  } finally {
+    // إعادة تفعيل الزر
+    submitBtn.disabled = false;
+    submitBtn.textContent = "إرسال طلب الانخراط";
+  }
 });
-
-document.getElementById("membershipForm")
-.addEventListener("submit",async function(e){
-
-e.preventDefault();
-
-document.getElementById("successBox").style.display="block";
-
-window.scrollTo({
-top:document.body.scrollHeight,
-behavior:"smooth"
-});
-
-});
-
 </script>
 
 </body>
